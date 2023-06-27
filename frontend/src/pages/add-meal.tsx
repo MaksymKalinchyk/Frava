@@ -73,7 +73,7 @@ export default function AddMeal() {
   const [mealName, setMealName] = useState("");
   const [mealDescription, setMealDescription] = useState("");
   const [mealType, setMealType] = useState("");
-  let numOfServings = 0;
+  let numOfServings = 1;
 
   const { activeStep, setActiveStep } = useSteps({
     index: 1,
@@ -92,6 +92,7 @@ export default function AddMeal() {
     event.preventDefault();
     const data: MealResponse = await findFoodInfo(barcode);
     setInitialFoodInfo(data);
+    setFood(data);
     nextForm();
   }
 
@@ -113,11 +114,8 @@ export default function AddMeal() {
     await createMeal(meal);
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target;
-    numOfServings = parseInt(value);
-
-    setIsError(numOfServings === 0 || value === "");
+  function updateChart() {
+    console.log(numOfServings, initialFoodInfo);
 
     if (
       numOfServings > 0 &&
@@ -139,6 +137,15 @@ export default function AddMeal() {
       };
       setFood(updatedFoodInfo);
     }
+  }
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { value } = event.target;
+    numOfServings = parseInt(value);
+
+    setIsError(numOfServings === 0 || value === "");
+
+    updateChart();
   }
   return (
     <Layout>

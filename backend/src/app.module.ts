@@ -9,7 +9,9 @@ import { AuthModule } from './auth/auth.module';
 import { MealModule } from './meal/meal.module';
 import { Meal } from './meal/entities/meal.entity';
 import { FriendRequestModule } from './friend-request/friend-request.module';
-import { FriendRequestEntity } from './friend-request/entities/friend-request.entity';
+import { FriendRequest } from './friend-request/entities/friend-request.entity';
+import { MealItemModule } from './meal-item/meal-item.module';
+import { MealItem } from './meal-item/entities/meal-item.entity';
 
 @Module({
   controllers: [AppController],
@@ -21,8 +23,8 @@ import { FriendRequestEntity } from './friend-request/entities/friend-request.en
     username: 'root',
     password: 'root',
     database: 'work',
-    entities: [User, Meal, FriendRequestEntity],
+    entities: [User, Meal, FriendRequest, MealItem],
     synchronize: true,
-  }), UsersModule, AuthModule, MealModule, FriendRequestModule],
+  }), UsersModule, AuthModule, MealModule, FriendRequestModule, MealItemModule],
 })
 export class AppModule {}

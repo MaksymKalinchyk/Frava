@@ -1,5 +1,4 @@
-import { IsEmail, IsNotEmpty, Validate } from 'class-validator';
-import { User } from 'src/user/entities/user.entity';
+import { IsNotEmpty } from 'class-validator';
 import { MealType } from '../entities/meal.entity';
 
 export class CreateMealDto {
@@ -29,7 +28,4 @@ export class CreateMealDto {
 
   @IsNotEmpty()
   fats: number;
-
-  @IsNotEmpty()
-  servings: number;
 }

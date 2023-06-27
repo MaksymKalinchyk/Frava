@@ -5,18 +5,18 @@ import { UpdateFriendRequestDto } from './dto/update-friend-request.dto';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import {
-  FriendRequest,
+  IFriendRequest,
   FriendRequestStatus,
   RequestStatus,
 } from './friend-request.interface';
-import { FriendRequestEntity } from './entities/friend-request.entity';
+import { FriendRequest } from './entities/friend-request.entity';
 import { UserInterface } from 'src/user/user.interface';
 
 @Injectable()
 export class FriendRequestService {
   constructor(
-    @InjectRepository(FriendRequestEntity)
-    private friendRequestRepository: Repository<FriendRequestEntity>,
+    @InjectRepository(FriendRequest)
+    private friendRequestRepository: Repository<FriendRequest>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
@@ -31,7 +31,7 @@ export class FriendRequestService {
   async sendFriendRequest(
     receiverId: number,
     creator: UserInterface,
-  ): Promise<FriendRequestEntity> {
+  ): Promise<FriendRequest> {
     
     
     if (receiverId === creator.id) throw new Error("Can't add yourself");
@@ -43,7 +43,7 @@ export class FriendRequestService {
       id: creator.id,
     });
 
-    let friendRequest: FriendRequest = {
+    let friendRequest: IFriendRequest = {
       sender: sender,
       receiver: receiver,
       status: 'Pending',

@@ -12,12 +12,14 @@ export class MealService {
     @InjectRepository(Meal)
     private mealRepository: Repository<Meal>,
     @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private userRepository: Repository<User>
   ) {}
   async create(createMealDto: CreateMealDto): Promise<Meal> {
     let meal = this.mealRepository.create(createMealDto);
-    meal.user = await this.userRepository.findOneByOrFail({id: createMealDto.userId});
-    return this.mealRepository.save(meal);
+    meal.user = await this.userRepository.findOneByOrFail({
+      id: createMealDto.userId,
+    });
+    return await this.mealRepository.save(meal);
   }
 
   findAll(): Promise<Meal[]> {

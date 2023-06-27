@@ -1,14 +1,12 @@
-import { Type } from 'class-transformer';
+import { MealItem } from 'src/meal-item/entities/meal-item.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   JoinTable,
-  ManyToMany,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -52,8 +50,8 @@ export class Meal {
   @Column()
   fats: number;
 
-  @Column()
-  servings: number;
+  @OneToMany(() => MealItem, mealItem => mealItem.meal)
+  mealItems: MealItem[];
 
   @CreateDateColumn({
     type: 'timestamp',

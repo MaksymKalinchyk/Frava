@@ -12,7 +12,7 @@ import {
 import { FriendRequestService } from './friend-request.service';
 import { CreateFriendRequestDto } from './dto/create-friend-request.dto';
 import { UpdateFriendRequestDto } from './dto/update-friend-request.dto';
-import { FriendRequestEntity } from './entities/friend-request.entity';
+import { FriendRequest } from './entities/friend-request.entity';
 import { Observable } from 'rxjs';
 import { User } from 'src/user/entities/user.entity';
 import { UserInterface } from 'src/user/user.interface';
@@ -54,7 +54,7 @@ export class FriendRequestController {
   sendFriendRequest(
     @Param('receiverId') receiverId: string,
     @Body() body: UserInterface,
-  ): Promise<FriendRequestEntity> {
+  ): Promise<FriendRequest> {
     return this.friendRequestService.sendFriendRequest(parseInt(receiverId), body);
   }
 

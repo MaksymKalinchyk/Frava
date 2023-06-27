@@ -3,7 +3,7 @@ import { PrimaryGeneratedColumn, Column, ManyToOne, Entity } from "typeorm";
 import { RequestStatus } from "../friend-request.interface";
 
 @Entity()
-export class FriendRequestEntity {
+export class FriendRequest {
  @PrimaryGeneratedColumn()
   id: number;
 
