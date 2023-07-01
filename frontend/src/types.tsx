@@ -28,7 +28,6 @@ export type AddMealResponse = {
   proteins: number;
   sugars: number;
   fats: number;
-  servings: number;
 };
 
 export type Meal = {
@@ -60,3 +59,9 @@ type ecoscore_extended_data = {
 type Impact = {
   warnings: [];
 };
+
+export type MealItems = {
+  amount: number;
+  product_name: string;
+  meal: Nutriment;
+};  
