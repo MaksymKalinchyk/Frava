@@ -2,16 +2,17 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MealService } from './meal.service';
 import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
+import { FullMealDto } from './dto/full-meal.dto';
 
 @Controller('meal')
 export class MealController {
   constructor(private readonly mealService: MealService) {}
 
   @Post()
-  create(@Body() createMealDto: CreateMealDto) {
-    console.log(createMealDto);
+  create(@Body() fullMealDto: FullMealDto) {
+    console.log(fullMealDto);
     
-    return this.mealService.create(createMealDto);
+    return this.mealService.create(fullMealDto);
   }
 
   @Get()

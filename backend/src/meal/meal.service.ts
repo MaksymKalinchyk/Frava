@@ -5,6 +5,9 @@ import { CreateMealDto } from './dto/create-meal.dto';
 import { UpdateMealDto } from './dto/update-meal.dto';
 import { Meal } from './entities/meal.entity';
 import { User } from 'src/user/entities/user.entity';
+import { FullMealDto } from './dto/full-meal.dto';
+import { FullMeal } from './meal.interface';
+import { MealItem } from 'src/meal-item/entities/meal-item.entity';
 
 @Injectable()
 export class MealService {
@@ -12,14 +15,28 @@ export class MealService {
     @InjectRepository(Meal)
     private mealRepository: Repository<Meal>,
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+    @InjectRepository(MealItem)
+    private mealItemRepository: Repository<MealItem>,
   ) {}
-  async create(createMealDto: CreateMealDto): Promise<Meal> {
-    let meal = this.mealRepository.create(createMealDto);
+  async create(fullMealDto: FullMealDto): Promise<FullMeal> {
+    let meal = this.mealRepository.create(fullMealDto.Meal);
     meal.user = await this.userRepository.findOneByOrFail({
-      id: createMealDto.userId,
+      id: fullMealDto.Meal.userId,
     });
-    return await this.mealRepository.save(meal);
+    const createdMeal = await this.mealRepository.save(meal);
+    const createdMealItems = await Promise.all(
+      fullMealDto.MealItems.map(async (MealItem) => {
+        let mealItem = this.mealItemRepository.create(MealItem);
+        mealItem.meal = createdMeal;
+        return await this.mealItemRepository.save(mealItem);
+      }),
+    );
+    console.log(createdMealItems);
+    return {
+      Meal: createdMeal,
+      MealItems: createdMealItems,
+    };
   }
 
   findAll(): Promise<Meal[]> {

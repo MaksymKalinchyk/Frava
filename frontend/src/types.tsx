@@ -19,16 +19,27 @@ export type MealResponse = {
 };
 
 export type AddMealResponse = {
-  userId: number;
-  mealType: string;
-  calories: number;
-  mealName: string;
-  mealDescription: string;
-  carbohydrates: number;
-  proteins: number;
-  sugars: number;
-  fats: number;
-  servings: number;
+  Meal: {
+    mealType: string;
+    mealName: string;
+    mealDescription: string;
+    calories: number;
+    carbohydrates: number;
+    proteins: number;
+    sugars: number;
+    fats: number;
+    userId: number;
+  };
+  MealItems: 
+    {
+      calories: number;
+      mealItemName: string;
+      carbohydrates: number;
+      proteins: number;
+      sugars: number;
+      fats: number;
+      servings: number;
+    }[];
 };
 
 export type Meal = {
@@ -59,4 +70,20 @@ type ecoscore_extended_data = {
 
 type Impact = {
   warnings: [];
+};
+
+export type MealItems = {
+  servings: number;
+  product_name: string;
+  nutriment: Nutriment;
+};
+
+export type MealItem = {
+  calories: number;
+  product_name: string;
+  carbohydrates: number;
+  proteins: number;
+  sugars: number;
+  fats: number;
+  servings: number;
 };
