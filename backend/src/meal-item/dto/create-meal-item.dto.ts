@@ -1,9 +1,6 @@
 import { IsNotEmpty } from "class-validator";
-
 export class CreateMealItemDto {
-  @IsNotEmpty()
-  calories: number;
-
+  
   @IsNotEmpty()
   mealItemName: string;
 
@@ -18,6 +15,9 @@ export class CreateMealItemDto {
 
   @IsNotEmpty()
   fats: number;
+
+  @IsNotEmpty()
+  calories: number;
 
   @IsNotEmpty()
   servings: number;

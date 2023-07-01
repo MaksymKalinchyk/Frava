@@ -143,16 +143,16 @@ export default function AddMeal() {
           fat_serving,
           proteins_serving,
           sugars_serving,
-        } = mealItem.meal;
+        } = mealItem.nutriment;
 
         if (
           carbohydrates_serving !== undefined ||
-          mealItem.meal["energy-kcal_serving"] !== undefined ||
+          mealItem.nutriment["energy-kcal_serving"] !== undefined ||
           totalNutrients["energy-kcal_serving"] !== undefined
         ) {
           totalNutrients.carbohydrates_serving += carbohydrates_serving ?? 0;
           totalNutrients["energy-kcal_serving"]! +=
-            mealItem.meal["energy-kcal_serving"] ?? 0;
+            mealItem.nutriment["energy-kcal_serving"] ?? 0;
           totalNutrients.fat_serving += fat_serving ?? 0;
           totalNutrients.proteins_serving += proteins_serving ?? 0;
           totalNutrients.sugars_serving += sugars_serving ?? 0;
@@ -175,16 +175,28 @@ export default function AddMeal() {
   async function addMeal(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const user = JSON.parse(localStorage.getItem("User")!);
-    const meal = {
-      userId: user.userId,
-      mealType: "Breakfast",
-      mealName,
-      mealDescription,
-      sugars: totalNutrients.sugars_serving ?? 0,
-      calories: totalNutrients["energy-kcal_serving"] ?? 0,
-      proteins: totalNutrients.proteins_serving ?? 0,
-      fats: totalNutrients.fat_serving ?? 0,
-      carbohydrates: totalNutrients.carbohydrates_serving ?? 0,
+    const test = mealItems.map((mealItem) => {return {
+      calories: mealItem.nutriment["energy-kcal_serving"] ?? 0,
+      mealItemName: mealItem.product_name,
+      carbohydrates: mealItem.nutriment.carbohydrates_serving,
+      proteins: mealItem.nutriment.proteins_serving,
+      sugars: mealItem.nutriment.sugars_serving,
+      fats: mealItem.nutriment.fat_serving,
+      servings: mealItem.servings,
+    }});
+    const meal: AddMealResponse = {
+      Meal: {
+        userId: user.userId,
+        mealType: "Breakfast",
+        mealName,
+        mealDescription,
+        sugars: totalNutrients.sugars_serving ?? 0,
+        calories: totalNutrients["energy-kcal_serving"] ?? 0,
+        proteins: totalNutrients.proteins_serving ?? 0,
+        fats: totalNutrients.fat_serving ?? 0,
+        carbohydrates: totalNutrients.carbohydrates_serving ?? 0,
+      },
+      MealItems: test
     };
     await createMeal(meal);
   }
@@ -198,23 +210,23 @@ export default function AddMeal() {
       setMealItems((prevMealItems) => {
         const updatedMealItems = [...prevMealItems];
         const newServings =
-          updatedMealItems[existingIndex].amount + numOfServings;
+          updatedMealItems[existingIndex].servings + numOfServings;
 
-        updatedMealItems[existingIndex].meal = calculateNutrientsPerServings(
-          mealItems[existingIndex].meal,
+        updatedMealItems[existingIndex].nutriment = calculateNutrientsPerServings(
+          mealItems[existingIndex].nutriment,
           newServings,
-          updatedMealItems[existingIndex].amount
+          updatedMealItems[existingIndex].servings
         );
-        updatedMealItems[existingIndex].amount = newServings;
+        updatedMealItems[existingIndex].servings = newServings;
         console.log(updatedMealItems);
 
         return updatedMealItems;
       });
     } else if (initialFoodInfo.nutriments && initialFoodInfo.product_name) {
       const newMealItem = {
-        amount: numOfServings,
+        servings: numOfServings,
         product_name: initialFoodInfo.product_name,
-        meal: calculateNutrientsPerServings(
+        nutriment: calculateNutrientsPerServings(
           initialFoodInfo.nutriments,
           numOfServings
         ),
@@ -227,6 +239,7 @@ export default function AddMeal() {
   }
 
   function updateChart(newNumber: number) {
+    if(initialFoodInfo === undefined) return;
     const nutriments = initialFoodInfo.nutriments;
     if (newNumber > 0 && nutriments && nutriments["energy-kcal_serving"]) {
       const updatedFoodInfo = {
@@ -253,12 +266,12 @@ export default function AddMeal() {
   function handleNumOfServings(number: string, index: number) {
     const newServingAmount = parseInt(number);
     const updatedMealItems = [...mealItems];
-    updatedMealItems[index].meal = calculateNutrientsPerServings(
-      updatedMealItems[index].meal,
+    updatedMealItems[index].nutriment = calculateNutrientsPerServings(
+      updatedMealItems[index].nutriment,
       newServingAmount,
-      updatedMealItems[index].amount
+      updatedMealItems[index].servings
     );
-    updatedMealItems[index].amount = newServingAmount;
+    updatedMealItems[index].servings = newServingAmount;
 
     setMealItems(updatedMealItems);
   }
@@ -412,13 +425,13 @@ export default function AddMeal() {
                   <React.Fragment key={index + "fragment"}>
                     <h1 key={index}>{mealItem.product_name}</h1>
                     <h1 key={index + "h1"}>
-                      {mealItem?.meal["energy-kcal_serving"]?.toFixed(1)} kcal
+                      {mealItem?.nutriment["energy-kcal_serving"]?.toFixed(1)} kcal
                     </h1>
                     <div key={index + "div"} className="justify-self-center">
                       <NumberInput
                         size="sm"
                         maxW={24}
-                        defaultValue={mealItem.amount}
+                        defaultValue={mealItem.servings}
                         min={1}
                         onChange={(number: string) =>
                           handleNumOfServings(number, index)
