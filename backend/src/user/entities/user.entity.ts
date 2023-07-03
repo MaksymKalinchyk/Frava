@@ -1,4 +1,5 @@
 import { FriendRequest } from 'src/friend-request/entities/friend-request.entity';
+import { Like } from 'src/likes/entities/like.entity';
 import { Meal } from 'src/meal/entities/meal.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -33,4 +34,7 @@ export class User {
 
   @OneToMany(() => FriendRequest, friendRequest => friendRequest.receiver)
   receivedFriendRequests: FriendRequest[];
+
+  @OneToMany(() => Like, like => like.user)
+  likes: Like[];
 }

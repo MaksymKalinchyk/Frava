@@ -1,3 +1,4 @@
+import { Like } from 'src/likes/entities/like.entity';
 import { MealItem } from 'src/meal-item/entities/meal-item.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -52,6 +53,9 @@ export class Meal {
 
   @OneToMany(() => MealItem, mealItem => mealItem.meal)
   mealItems: MealItem[];
+
+  @OneToMany(() => Like, (like) => like.meal)
+  likes: Like[];
 
   @CreateDateColumn({
     type: 'timestamp',
