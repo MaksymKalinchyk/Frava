@@ -44,6 +44,12 @@ export class UserService {
     });
   }
 
+  findOneById(id: number): Promise<User | null> {
+    return this.usersRepository.findOneByOrFail({
+      id:id
+    });
+  }
+
   // async remove(id: string): Promise<void> {
   //   await this.usersRepository.delete(id);
   // }
