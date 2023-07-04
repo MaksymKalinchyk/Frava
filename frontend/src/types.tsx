@@ -104,5 +104,5 @@ export type LikeResponse = {
 
 export type LikesPerMeal = {
   likes: number,
-  likdByUser: boolean;
+  likeId: string | null;
 }

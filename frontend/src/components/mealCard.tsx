@@ -30,13 +30,13 @@ import {
   WarningIcon,
 } from "@chakra-ui/icons";
 import yoghurtPic from "../images/yoghurt.jpg";
-import { LikeBody, Meal } from "@/types";
+import { LikeBody, LikesPerMeal, Meal } from "@/types";
 import { useEffect, useState } from "react";
-import { getTotalLikesPerMeal, likeMeal } from "@/services/likeService";
+import { getTotalLikesPerMeal, likeMeal, removeLike } from "@/services/likeService";
 
 interface MealCardProps {
   meal: Meal;
-  likes: number;
+  likes: LikesPerMeal;
 }
 
 const MealCard: React.FC<MealCardProps> = ({ meal, likes }) => {
@@ -55,19 +55,19 @@ const MealCard: React.FC<MealCardProps> = ({ meal, likes }) => {
     setNewLikes(likes);
   }, [likes]);
 
-  
-
   async function handleLikeMeal() {
-    setNewLikes(newLikes + 1);
-    console.log(meal);
-
     let likeBody: LikeBody = {
       userId: meal.user.id,
       mealId: meal.id,
     };
-    console.log(likeBody);
+    const res = await likeMeal(likeBody);
+    setNewLikes({ likes: newLikes.likes + 1, likeId: res.id });
+  }
 
-    await likeMeal(likeBody);
+  async function removeLikeMeal() {
+    const likesAfterRemoval = newLikes.likes - 1;
+    await removeLike(newLikes.likeId);
+    setNewLikes({ likes: likesAfterRemoval, likeId: null});
   }
 
   return (
@@ -90,10 +90,7 @@ const MealCard: React.FC<MealCardProps> = ({ meal, likes }) => {
             <Spacer />
             <Box>
               <Text color={"gray.600"}>
-                {new Date(meal.created_at).toLocaleString(
-                  "en-GB",
-                  options
-                )}
+                {new Date(meal.created_at).toLocaleString("en-GB", options)}
               </Text>
             </Box>
           </Flex>
@@ -150,14 +147,25 @@ const MealCard: React.FC<MealCardProps> = ({ meal, likes }) => {
           },
         }}
       >
-        <Button
-          flex="1"
-          onClick={handleLikeMeal}
-          variant="ghost"
-          leftIcon={<StarIcon />}
-        >
-          Give props ({newLikes})
-        </Button>
+        {newLikes.likeId !== null ? (
+          <Button
+            flex="1"
+            onClick={removeLikeMeal}
+            variant="ghost"
+            leftIcon={<StarIcon color={'yellow.300'} />}
+          >
+            Props Given ({newLikes.likes})
+          </Button>
+        ) : (
+          <Button
+            flex="1"
+            onClick={handleLikeMeal}
+            variant="ghost"
+            leftIcon={<StarIcon />}
+          >
+            Give props ({newLikes.likes})
+          </Button>
+        )}
         <Button flex="1" variant="ghost" leftIcon={<ChatIcon />}>
           Comment
         </Button>

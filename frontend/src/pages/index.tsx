@@ -28,7 +28,7 @@ export default function Home() {
     <Layout>
       <Container mt={"5vh"}>
         {meals.map((meal: Meal, index: number) => (
-          <MealCard key={index} meal={meal} likes={likes[index].likes} />
+          <MealCard key={index} meal={meal} likes={likes[index]} />
         ))}
       </Container>
     </Layout>
