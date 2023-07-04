@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards } from '@nestjs/common';
 import { LikesService } from './likes.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
+import { ITotalLikesPerMeal } from './likes.interface';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('likes')
 export class LikesController {
@@ -17,9 +19,20 @@ export class LikesController {
     return this.likesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.likesService.findOne(+id);
+  // @Get(':id')
+  // findOne(@Param('id') id: number) {
+  //   return this.likesService.findOne(+id);
+  // }
+
+  @Get(':id/total')
+  getTotalLikesPerMeal(@Param('id') mealId: string): Promise<number> {
+    return this.likesService.getTotalLikesPerMeal(+mealId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/total')
+  getTotalLikesForAllMeals(@Request() req: any): Promise<ITotalLikesPerMeal[]> {
+    return this.likesService.getTotalLikesForAllMeals(req.user.userId);
   }
 
   @Patch(':id')

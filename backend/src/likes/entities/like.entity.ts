@@ -7,10 +7,10 @@ export class Like {
   @PrimaryGeneratedColumn("uuid")
   id: number;
 
-  @ManyToOne(() => User, (user) => user.likes, { cascade: true })
+  @ManyToOne(() => User, (user) => user.likes)
   user: User;
 
-  @ManyToOne(() => Meal, (meal) => meal.likes, { cascade: true })
+  @ManyToOne(() => Meal, (meal) => meal.likes)
   meal: Meal;
 
   @CreateDateColumn({
