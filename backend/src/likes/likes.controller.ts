@@ -42,6 +42,8 @@ export class LikesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.likesService.remove(+id);
+    console.log(id);
+    
+    return this.likesService.remove(id);
   }
 }

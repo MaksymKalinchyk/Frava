@@ -1,4 +1,4 @@
 export interface ITotalLikesPerMeal {
     likes: number;
-    likedByUser: boolean;
+    likeId: string | null;
 }

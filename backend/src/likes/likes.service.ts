@@ -35,12 +35,13 @@ export class LikesService {
   }
 
   async getTotalLikesForAllMeals(userId: number): Promise<ITotalLikesPerMeal[]> {  
-    const meals = await this.mealRepository.find();
+    const meals = (await this.mealRepository.find()).sort((a, b) => b.id - a.id);
     let totalLikesPerMeal: ITotalLikesPerMeal[] = [];
     for (let meal of meals) {
+      const like = await this.likeRepository.findOne({ where: { meal: { id: meal.id }, user: { id: userId } } });
       totalLikesPerMeal.push({
         likes: await this.likeRepository.count({ where: { meal: { id: meal.id } } }),
-        likedByUser: await this.likeRepository.count({ where: { meal: { id: meal.id }, user: { id: userId } } }) > 0
+        likeId: like ? like.id : null,
       }
       );
     }   
@@ -59,7 +60,7 @@ export class LikesService {
     return `This action updates a #${id} like`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} like`;
+  async remove(id: string) {    
+    return this.likeRepository.delete(id);
   }
 }
