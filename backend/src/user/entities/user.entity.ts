@@ -1,3 +1,4 @@
+import { Comment } from 'src/comments/entities/comment.entity';
 import { FriendRequest } from 'src/friend-request/entities/friend-request.entity';
 import { Like } from 'src/likes/entities/like.entity';
 import { Meal } from 'src/meal/entities/meal.entity';
@@ -38,4 +39,7 @@ export class User {
 
   @OneToMany(() => Like, like => like.user)
   likes: Like[];
+
+  @OneToMany(() => Comment, comment => comment.user)
+  comments: Comment[];
 }

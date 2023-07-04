@@ -14,6 +14,8 @@ import { MealItemModule } from './meal-item/meal-item.module';
 import { MealItem } from './meal-item/entities/meal-item.entity';
 import { LikesModule } from './likes/likes.module';
 import { Like } from './likes/entities/like.entity';
+import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/entities/comment.entity';
 
 @Module({
   controllers: [AppController],
@@ -25,8 +27,8 @@ import { Like } from './likes/entities/like.entity';
     username: 'root',
     password: 'root',
     database: 'work',
-    entities: [User, Meal, FriendRequest, MealItem, Like],
+    entities: [User, Meal, FriendRequest, MealItem, Like, Comment],
     synchronize: true,
-  }), UsersModule, AuthModule, MealModule, FriendRequestModule, MealItemModule, LikesModule],
+  }), UsersModule, AuthModule, MealModule, FriendRequestModule, MealItemModule, LikesModule, CommentsModule],
 })
 export class AppModule {}
