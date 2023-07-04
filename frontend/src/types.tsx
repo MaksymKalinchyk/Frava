@@ -1,10 +1,12 @@
+import { UUID } from "crypto";
+
 export type AuthResponse = {
   User: User;
   accessToken: string;
 };
 
 export type User = {
-  userId: number;
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
@@ -43,6 +45,7 @@ export type AddMealResponse = {
 };
 
 export type Meal = {
+  id: number;
   mealType: string;
   mealName: string;
   mealDescription: string;
@@ -87,3 +90,19 @@ export type MealItem = {
   fats: number;
   servings: number;
 };
+
+export type LikeBody = {
+  userId: number;
+  mealId: number;
+}
+
+export type LikeResponse = {
+  id: UUID;
+  user: User;
+  meal: Meal;
+}
+
+export type LikesPerMeal = {
+  likes: number,
+  likdByUser: boolean;
+}

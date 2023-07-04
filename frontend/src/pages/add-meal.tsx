@@ -295,7 +295,7 @@ export default function AddMeal() {
   }
   return (
     <Layout>
-      <Container mt={"5vh"}>
+      <Container mt={"5vh"} maxW='container.sm'>
         <Stepper index={activeStep}>
           {steps.map((step, index) => (
             <Step key={index}>

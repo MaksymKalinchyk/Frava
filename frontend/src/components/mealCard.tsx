@@ -30,22 +30,46 @@ import {
   WarningIcon,
 } from "@chakra-ui/icons";
 import yoghurtPic from "../images/yoghurt.jpg";
-import { Meal } from "@/types";
-import Head from "next/head";
+import { LikeBody, Meal } from "@/types";
+import { useEffect, useState } from "react";
+import { getTotalLikesPerMeal, likeMeal } from "@/services/likeService";
 
 interface MealCardProps {
   meal: Meal;
+  likes: number;
 }
 
-const MealCard: React.FC<MealCardProps> = ({ meal }) => {
-  const options = {
+const MealCard: React.FC<MealCardProps> = ({ meal, likes }) => {
+  const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
-    month: "long",
+    month: "numeric",
     day: "numeric",
     hour: "numeric",
     minute: "numeric",
     second: "numeric",
   };
+
+  const [newLikes, setNewLikes] = useState(likes);
+
+  useEffect(() => {
+    setNewLikes(likes);
+  }, [likes]);
+
+  
+
+  async function handleLikeMeal() {
+    setNewLikes(newLikes + 1);
+    console.log(meal);
+
+    let likeBody: LikeBody = {
+      userId: meal.user.id,
+      mealId: meal.id,
+    };
+    console.log(likeBody);
+
+    await likeMeal(likeBody);
+  }
+
   return (
     <Card maxW="lg" mt={"5vh"}>
       <CardHeader>
@@ -65,9 +89,9 @@ const MealCard: React.FC<MealCardProps> = ({ meal }) => {
             </Box>
             <Spacer />
             <Box>
-              <Text color={'gray.600'}>
-                {new Date(meal.created_at).toLocaleDateString(
-                  undefined,
+              <Text color={"gray.600"}>
+                {new Date(meal.created_at).toLocaleString(
+                  "en-GB",
                   options
                 )}
               </Text>
@@ -126,8 +150,13 @@ const MealCard: React.FC<MealCardProps> = ({ meal }) => {
           },
         }}
       >
-        <Button flex="1" variant="ghost" leftIcon={<StarIcon />}>
-          Give props
+        <Button
+          flex="1"
+          onClick={handleLikeMeal}
+          variant="ghost"
+          leftIcon={<StarIcon />}
+        >
+          Give props ({newLikes})
         </Button>
         <Button flex="1" variant="ghost" leftIcon={<ChatIcon />}>
           Comment
