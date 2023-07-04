@@ -1,11 +1,12 @@
 import { Meal } from 'src/meal/entities/meal.entity';
 import { User } from 'src/user/entities/user.entity';
-import { CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
+@Index(['user', 'meal'], { unique: true })
 export class Like {
   @PrimaryGeneratedColumn("uuid")
-  id: number;
+  id: string;
 
   @ManyToOne(() => User, (user) => user.likes)
   user: User;
