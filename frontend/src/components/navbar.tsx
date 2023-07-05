@@ -42,9 +42,14 @@ export default function NavBar() {
       <Box bg={useColorModeValue("blue.700", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <div className="flex flex-row space-x-4">
-            <Box color={"white"}>Logo</Box>
+            <Box color={"white"}>
+              <Link href="/">Home</Link>
+            </Box>
             <Box color={"white"}>
               <Link href="/add-meal">Add Meal</Link>
+            </Box>
+            <Box color={"white"}>
+              <Link href="/add-friend">Add Friend</Link>
             </Box>
             <Box color={"white"}>
               <Link href="/authentication">Log In</Link>
