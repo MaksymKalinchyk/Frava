@@ -7,6 +7,7 @@ export type AuthResponse = {
 
 export type User = {
   id: number;
+  userName: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -105,4 +106,20 @@ export type LikeResponse = {
 export type LikesPerMeal = {
   likes: number,
   likeId: string | null;
+}
+
+export type CommentAmount = {
+  comments: number;
+}
+
+export type Comment = {
+  id?: UUID;
+  comment: string;
+  user: User;
+  created_at?: Date;
+}
+
+export type PostCommentBody = {
+  mealId: number;
+  comment: string;
 }

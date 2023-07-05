@@ -3,6 +3,7 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { ITotalCommentsPerMeal } from './comments.interface';
 
 @Controller('comments')
 export class CommentsController {
@@ -22,6 +23,17 @@ export class CommentsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.commentsService.findOne(+id);
+  }
+
+  @Get('meal/:id')
+  findCommentsForMeal(@Param('id') mealId: string) {
+    return this.commentsService.findCommentsForMeal(+mealId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/count/all')
+  getCommentAmountPerMeal(@Request() req: any): Promise<ITotalCommentsPerMeal[]> {
+    return this.commentsService.getCommentAmountPerMeal(req.user.userId);
   }
 
   @Patch(':id')
