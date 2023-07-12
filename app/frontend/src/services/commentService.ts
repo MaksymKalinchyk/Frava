@@ -1,5 +1,5 @@
-import apiClient from "@/apiClient";
-import { CommentAmount, Comment, PostCommentBody } from "@/types";
+import apiClient from "../apiClient";
+import { CommentAmount, Comment, PostCommentBody } from "../types";
 
 export const getCommentAmountPerMeal = async (): Promise<
   CommentAmount[] | any

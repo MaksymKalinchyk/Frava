@@ -1,6 +1,6 @@
 import { NextRouter } from 'next/router';
-import apiClient from '@/apiClient';
-import { AuthResponse } from '@/types';
+import apiClient from '../apiClient';
+import { AuthResponse } from '../types';
 
 export const login = async (
   email: string,

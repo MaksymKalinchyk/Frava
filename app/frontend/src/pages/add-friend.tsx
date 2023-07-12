@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import Layout from "@/components/layout";
+import Layout from "../components/layout";
 import React, { useState, useEffect } from "react";
-import { getAllMeals } from "@/services/mealService";
+import { getAllMeals } from "../services/mealService";
 import {
   Box,
   Button,
@@ -23,8 +23,8 @@ import {
   Td,
   Stack,
 } from "@chakra-ui/react";
-import { getFriendsList, respondFriendRequest, sendFriendRequest } from "@/services/friendService";
-import { Friend, FriendRequest, User } from "@/types";
+import { getFriendsList, respondFriendRequest, sendFriendRequest } from "../services/friendService";
+import { Friend, FriendRequest, User } from "../types";
 
 const inter = Inter({ subsets: ["latin"] });
 

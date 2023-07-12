@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import Layout from "@/components/layout";
+import Layout from "../components/layout";
 import { useState, useEffect } from "react";
-import { getAllMeals } from "@/services/mealService";
-import MealCard from "@/components/mealCard";
-import { CommentAmount, LikesPerMeal, Meal } from "@/types";
+import { getAllMeals } from "../services/mealService";
+import MealCard from "../components/mealCard";
+import { CommentAmount, LikesPerMeal, Meal } from "../types";
 import { Container } from "@chakra-ui/react";
-import { getTotalLikesForAllMeals } from "@/services/likeService";
-import { getCommentAmountPerMeal } from "@/services/commentService";
+import { getTotalLikesForAllMeals } from "../services/likeService";
+import { getCommentAmountPerMeal } from "../services/commentService";
 
 const inter = Inter({ subsets: ["latin"] });
 

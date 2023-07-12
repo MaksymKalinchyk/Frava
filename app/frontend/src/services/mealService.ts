@@ -1,6 +1,5 @@
-import apiClient from "@/apiClient";
-import { Food } from "@/interfaces/interfaces";
-import { MealResponse, AddMealResponse, Meal } from "@/types";
+import apiClient from "../apiClient";
+import { MealResponse, AddMealResponse, Meal } from "../types";
 
 export const findFoodInfo = async (
   barcode: string
