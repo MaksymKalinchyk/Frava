@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import Layout from "@/components/layout";
+import Layout from "../components/layout";
 import React, { useEffect } from "react";
 import { Chart } from "react-google-charts";
 import {
@@ -43,14 +43,14 @@ import {
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { use, useState } from "react";
-import { findFoodInfo, createMeal } from "@/services/mealService";
+import { findFoodInfo, createMeal } from "../services/mealService";
 import {
   AddMealResponse,
   MealItems,
   MealResponse,
   Nutriment,
   User,
-} from "@/types";
+} from "../types";
 
 const inter = Inter({ subsets: ["latin"] });
 

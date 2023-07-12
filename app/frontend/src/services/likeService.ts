@@ -1,5 +1,5 @@
-import apiClient from "@/apiClient";
-import { LikeBody, LikeResponse, LikesPerMeal } from "@/types";
+import apiClient from "../apiClient";
+import { LikeBody, LikeResponse, LikesPerMeal } from "../types";
 
 export const likeMeal = async (
   likeBody: LikeBody

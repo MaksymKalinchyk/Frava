@@ -20,15 +20,26 @@ import { Comment } from './comments/entities/comment.entity';
 @Module({
   controllers: [AppController],
   providers: [AppService],
-  imports: [FoodModule, TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: 'root',
-    database: 'work',
-    entities: [User, Meal, FriendRequest, MealItem, Like, Comment],
-    synchronize: true,
-  }), UsersModule, AuthModule, MealModule, FriendRequestModule, MealItemModule, LikesModule, CommentsModule],
+  imports: [
+    FoodModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'db',
+      port: 3306,
+      username: 'mysql',
+      password: 'root',
+      database: 'work',
+      // entities: [User, Meal, FriendRequest, MealItem, Like, Comment],
+      autoLoadEntities: true,
+      synchronize: true,
+    }),
+    UsersModule,
+    AuthModule,
+    MealModule,
+    FriendRequestModule,
+    MealItemModule,
+    LikesModule,
+    CommentsModule,
+  ],
 })
 export class AppModule {}

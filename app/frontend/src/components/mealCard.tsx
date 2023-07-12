@@ -37,14 +37,14 @@ import {
   WarningIcon,
 } from "@chakra-ui/icons";
 import yoghurtPic from "../images/yoghurt.jpg";
-import { LikeBody, LikesPerMeal, Meal, Comment } from "@/types";
+import { LikeBody, LikesPerMeal, Meal, Comment } from "../types";
 import React, { useEffect, useState } from "react";
 import {
   getTotalLikesPerMeal,
   likeMeal,
   removeLike,
-} from "@/services/likeService";
-import { getCommentsForMeal, postComment } from "@/services/commentService";
+} from "../services/likeService";
+import { getCommentsForMeal, postComment } from "../services/commentService";
 import { randomUUID } from "crypto";
 
 interface MealCardProps {

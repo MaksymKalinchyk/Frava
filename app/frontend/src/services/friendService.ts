@@ -1,5 +1,5 @@
-import apiClient from "@/apiClient";
-import { FriendRequest } from "@/types";
+import apiClient from "../apiClient";
+import { FriendRequest } from "../types";
 
 export const sendFriendRequest = async (
     userName: string
