@@ -15,5 +15,8 @@ COPY . .
 # Expose the port that your NestJS application listens on (e.g., 3000)
 EXPOSE 3000
 
+# Build app
+RUN yarn build
+
 # Start the application
-CMD ["yarn", "run", "start"]
+CMD ["npm", "run", "start"]
