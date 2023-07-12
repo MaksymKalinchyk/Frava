@@ -123,3 +123,18 @@ export type PostCommentBody = {
   mealId: number;
   comment: string;
 }
+
+export type FriendRequest = {
+  id: number;
+  sender: User;
+  receiver: User;
+  status: string;
+  created_at?: Date;
+}
+
+export type Friend = {
+  friendRequestId?: number;
+  user?: User;
+  status: string;
+  created_at?: Date;
+}
