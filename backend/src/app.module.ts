@@ -12,6 +12,10 @@ import { FriendRequestModule } from './friend-request/friend-request.module';
 import { FriendRequest } from './friend-request/entities/friend-request.entity';
 import { MealItemModule } from './meal-item/meal-item.module';
 import { MealItem } from './meal-item/entities/meal-item.entity';
+import { LikesModule } from './likes/likes.module';
+import { Like } from './likes/entities/like.entity';
+import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/entities/comment.entity';
 
 @Module({
   controllers: [AppController],
@@ -23,8 +27,8 @@ import { MealItem } from './meal-item/entities/meal-item.entity';
     username: 'root',
     password: 'root',
     database: 'work',
-    entities: [User, Meal, FriendRequest, MealItem],
+    entities: [User, Meal, FriendRequest, MealItem, Like, Comment],
     synchronize: true,
-  }), UsersModule, AuthModule, MealModule, FriendRequestModule, MealItemModule],
+  }), UsersModule, AuthModule, MealModule, FriendRequestModule, MealItemModule, LikesModule, CommentsModule],
 })
 export class AppModule {}

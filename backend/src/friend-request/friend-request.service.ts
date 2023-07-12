@@ -29,18 +29,16 @@ export class FriendRequestService {
   }
 
   async sendFriendRequest(
-    receiverId: number,
-    creator: UserInterface,
+    usernameToAdd: string,
+    user: UserInterface,
   ): Promise<FriendRequest> {
     
-    
-    if (receiverId === creator.id) throw new Error("Can't add yourself");
-    const receiver = await this.userRepository.findOneByOrFail({
-      id: receiverId,
-    });
-
     const sender = await this.userRepository.findOneByOrFail({
-      id: creator.id,
+      id: user.id,
+    });
+    if (usernameToAdd === sender.userName) throw new Error("Can't add yourself");
+    const receiver = await this.userRepository.findOneByOrFail({
+      userName: usernameToAdd,
     });
 
     let friendRequest: IFriendRequest = {
@@ -50,6 +48,22 @@ export class FriendRequestService {
     };
 
     return this.friendRequestRepository.save(friendRequest);
+  }
+
+  async getFriendsAndRequests(userId: number): Promise<FriendRequest[]> {
+    const user = await this.userRepository.findOneByOrFail({
+      id: userId,
+    });
+    console.log(userId);  
+    return await this.friendRequestRepository.find({
+      where: [
+        { sender: user, status: 'Pending' },
+        { sender: user, status: 'Accepted' },
+        { receiver: user, status: 'Pending' },
+        { receiver: user, status: 'Accepted' },
+      ],
+      relations: ['sender', 'receiver'],
+    });
   }
 
   create(createFriendRequestDto: CreateFriendRequestDto) {

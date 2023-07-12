@@ -1,10 +1,13 @@
+import { UUID } from "crypto";
+
 export type AuthResponse = {
   User: User;
   accessToken: string;
 };
 
 export type User = {
-  userId: number;
+  id: number;
+  userName: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -43,6 +46,7 @@ export type AddMealResponse = {
 };
 
 export type Meal = {
+  id: number;
   mealType: string;
   mealName: string;
   mealDescription: string;
@@ -87,3 +91,50 @@ export type MealItem = {
   fats: number;
   servings: number;
 };
+
+export type LikeBody = {
+  userId: number;
+  mealId: number;
+}
+
+export type LikeResponse = {
+  id: UUID;
+  user: User;
+  meal: Meal;
+}
+
+export type LikesPerMeal = {
+  likes: number,
+  likeId: string | null;
+}
+
+export type CommentAmount = {
+  comments: number;
+}
+
+export type Comment = {
+  id?: UUID;
+  comment: string;
+  user: User;
+  created_at?: Date;
+}
+
+export type PostCommentBody = {
+  mealId: number;
+  comment: string;
+}
+
+export type FriendRequest = {
+  id: number;
+  sender: User;
+  receiver: User;
+  status: string;
+  created_at?: Date;
+}
+
+export type Friend = {
+  friendRequestId?: number;
+  user?: User;
+  status: string;
+  created_at?: Date;
+}

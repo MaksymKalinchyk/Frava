@@ -71,8 +71,9 @@ export const options = {
 
 const steps = [
   { title: "Barcode", description: "Find Food" },
-  { title: "Add Food", description: "Add Food" },
-  { title: "Portion", description: "Portion size" },
+  { title: "Add Meal Item", description: "Add Meal Item" },
+  { title: "Meal Items", description: "Meal Items" },
+  { title: "Complete Meal", description: "Complete Meal" },
 ];
 
 export default function AddMeal() {
@@ -294,7 +295,7 @@ export default function AddMeal() {
   }
   return (
     <Layout>
-      <Container mt={"5vh"}>
+      <Container mt={"5vh"} maxW='container.sm'>
         <Stepper index={activeStep}>
           {steps.map((step, index) => (
             <Step key={index}>
